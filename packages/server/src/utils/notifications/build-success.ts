@@ -1,6 +1,7 @@
 import { db } from "@dokploy/server/db";
 import { notifications } from "@dokploy/server/db/schema";
 import BuildSuccessEmail from "@dokploy/server/emails/emails/build-success";
+import { Domain } from "@dokploy/server/services/domain";
 import { renderAsync } from "@react-email/components";
 import { and, eq } from "drizzle-orm";
 import { format } from "date-fns";
@@ -17,10 +18,7 @@ interface Props {
 	applicationType: string;
 	buildLink: string;
 	adminId: string;
-	domains: {
-		host: string;
-		https: boolean;
-	}[];
+	domains?: Domain[];
 }
 
 export const sendBuildSuccessNotifications = async ({
@@ -124,7 +122,7 @@ export const sendBuildSuccessNotifications = async ({
 						url: buildLink,
 					},
 				],
-				...chunkArray(domains, 2).map((chunk) =>
+				...chunkArray(domains ?? [], 2).map((chunk) =>
 					chunk.map((data) => ({
 						text: data.host,
 						url: `${data.https ? "https" : "http"}://${data.host}`,
