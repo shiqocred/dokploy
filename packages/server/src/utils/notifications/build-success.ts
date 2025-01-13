@@ -18,7 +18,7 @@ interface Props {
 	applicationType: string;
 	buildLink: string;
 	adminId: string;
-	domains?: Domain[];
+	domains: Domain[];
 }
 
 export const sendBuildSuccessNotifications = async ({
