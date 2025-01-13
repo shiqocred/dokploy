@@ -122,7 +122,7 @@ export const sendBuildSuccessNotifications = async ({
 						url: buildLink,
 					},
 				],
-				...chunkArray(domains ?? [], 2).map((chunk) =>
+				...chunkArray(domains, 2).map((chunk) =>
 					chunk.map((data) => ({
 						text: data.host,
 						url: `${data.https ? "https" : "http"}://${data.host}`,
